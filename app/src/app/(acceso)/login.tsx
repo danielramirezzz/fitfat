@@ -32,7 +32,7 @@ export default function Login() {
       // If sign-up was left half-way, ask for the personal data first.
       router.replace(u.perfilCompleto ? '/inicio' : '/datos');
     } catch (e) {
-      if (e instanceof ErrorApi && e.estado === 401) router.push('/error-datos');
+      if (e instanceof ErrorApi && e.estado === 401) router.push({ pathname: '/error-datos', params: { mensaje: e.message } });
       else avisar('Sin conexión', e instanceof Error ? e.message : 'Inténtalo de nuevo.');
     } finally {
       setCargando(false);
@@ -54,7 +54,7 @@ export default function Login() {
       <View style={styles.formulario}>
         <CampoTexto
           etiqueta="Usuario"
-          placeholder="Ingresa tu usuario"
+          placeholder="Tu usuario o tu correo"
           icono={<IconoUsuario />}
           value={usuario}
           onChangeText={setUsuario}

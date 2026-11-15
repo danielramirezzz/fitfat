@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { Text } from '@/components/texto';
@@ -7,10 +7,10 @@ import { IconoErrorNube, IconoReintentar } from '@/components/iconos-acceso';
 import { Pantalla } from '@/components/pantalla';
 import { Boton } from '@/components/ui';
 import { Colores, Fuentes, Radios } from '@/constants/theme';
-import { proximamente } from '@/lib/avisos';
 
 // "Pantalla error de datos": shown when the user or password are wrong.
 export default function ErrorDatos() {
+  const { mensaje } = useLocalSearchParams<{ mensaje?: string }>();
   const reintentar = () => (router.canGoBack() ? router.back() : router.replace('/login'));
 
   return (
@@ -21,10 +21,10 @@ export default function ErrorDatos() {
         <IconoErrorNube />
         <Text style={styles.titulo}>Error al iniciar sesión</Text>
         <Text style={styles.mensaje}>
-          Usuario o contraseña incorrectos.{'\n'}Revisa tus datos e inténtalo de nuevo.
+          {mensaje || 'Escribe tu usuario (o correo) y tu contraseña.'}
         </Text>
         <Boton texto="Reintentar" onPress={reintentar} icono={<IconoReintentar />} estilo={styles.boton} />
-        <Pressable onPress={() => proximamente('Recuperar contraseña')} hitSlop={6}>
+        <Pressable onPress={() => router.push('/recuperar')} hitSlop={6}>
           <Text style={styles.olvidaste}>¿Olvidaste tu contraseña?</Text>
         </Pressable>
       </View>

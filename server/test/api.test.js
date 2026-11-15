@@ -55,13 +55,13 @@ test('registro, perfil, login y logout', async () => {
   assert.equal((await llamar('GET', '/yo', null, login.datos.token)).estado, 401);
 });
 
-test('login incorrecto da 401 con el mismo mensaje', async () => {
+test('login incorrecto da 401 (con un mensaje distinto según el motivo)', async () => {
   await llamar('POST', '/registro', { usuario: 'prueba_2', contrasena: 'clave-segura-2' });
   const malaClave = await llamar('POST', '/login', { usuario: 'prueba_2', contrasena: 'otra-clave' });
   const noExiste = await llamar('POST', '/login', { usuario: 'nadie', contrasena: 'clave-segura-2' });
   assert.equal(malaClave.estado, 401);
   assert.equal(noExiste.estado, 401);
-  assert.equal(malaClave.datos.error, noExiste.datos.error);
+  assert.notEqual(malaClave.datos.error, noExiste.datos.error);
 });
 
 test('validaciones del registro', async () => {
@@ -77,4 +77,17 @@ test('validaciones del perfil y sesión requerida', async () => {
   const malo = await llamar('PUT', '/perfil', { ...PERFIL, fechaNacimiento: '2002-02-31', estatura: 300 }, datos.token);
   assert.equal(malo.estado, 400);
   assert.deepEqual(malo.datos.campos, ['fechaNacimiento', 'estatura']);
+});
+
+test('login: entra con usuario o correo y explica el motivo cuando falla', async () => {
+  await llamar('POST', '/registro', { usuario: 'login_claro', contrasena: 'clave-segura-1', correo: 'Login.Claro@correo.com' });
+  assert.equal((await llamar('POST', '/login', { usuario: 'login_claro', contrasena: 'clave-segura-1' })).estado, 200);
+  assert.equal((await llamar('POST', '/login', { usuario: 'LOGIN.claro@correo.com', contrasena: 'clave-segura-1' })).estado, 200);
+
+  const noExiste = await llamar('POST', '/login', { usuario: 'nadie_aqui', contrasena: 'x' });
+  assert.equal(noExiste.estado, 401);
+  assert.equal(noExiste.datos.motivo, 'usuario');
+
+  const mala = await llamar('POST', '/login', { usuario: 'login_claro', contrasena: 'otra-clave' });
+  assert.equal(mala.datos.motivo, 'contrasena');
 });

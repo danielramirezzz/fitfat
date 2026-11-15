@@ -1,4 +1,5 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
+import Svg, { Circle, Path } from 'react-native-svg';
 import { Pressable, StyleSheet, TextInput, TextInputProps, View, ViewStyle } from 'react-native';
 
 import { Text } from '@/components/texto';
@@ -50,8 +51,40 @@ type CampoProps = TextInputProps & {
   error?: string;
 };
 
+// Eye (show) / crossed eye (hide), Lucide style.
+function IconoOjo({ abierto }: { abierto: boolean }) {
+  return (
+    <Svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="#8F8F8F" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      {abierto ? (
+        <>
+          <Path d="M2.06 12.35a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 19.88 0 1 1 0 0 1 0 .7 10.75 10.75 0 0 1-19.88 0" />
+          <Circle cx={12} cy={12} r={3} />
+        </>
+      ) : (
+        <>
+          <Path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c4.36 0 8.07 2.66 9.94 6.65a1 1 0 0 1 0 .7 10.53 10.53 0 0 1-1.97 2.95" />
+          <Path d="M14.08 14.16a3 3 0 0 1-4.17-4.2" />
+          <Path d="M17.48 17.5A10.71 10.71 0 0 1 12 19c-4.36 0-8.07-2.66-9.94-6.65a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 4.45-5.14" />
+          <Path d="m2 2 20 20" />
+        </>
+      )}
+    </Svg>
+  );
+}
+
 // Labeled text field: Freeman label + dark pill (height 48) with a gray icon.
-export function CampoTexto({ etiqueta, icono, iconoDerecha, error, style, ...props }: CampoProps) {
+// Password fields (secureTextEntry) get an eye button to show / hide what was typed.
+export function CampoTexto({ etiqueta, icono, iconoDerecha, error, style, secureTextEntry, ...props }: CampoProps) {
+  const [visible, setVisible] = useState(false);
+  const ojo = secureTextEntry ? (
+    <Pressable
+      onPress={() => setVisible((v) => !v)}
+      hitSlop={12}
+      accessibilityRole="button"
+      accessibilityLabel={visible ? 'Ocultar contraseña' : 'Mostrar contraseña'}>
+      <IconoOjo abierto={!visible} />
+    </Pressable>
+  ) : null;
   return (
     <View>
       <Text style={styles.etiqueta}>{etiqueta}</Text>
@@ -60,9 +93,12 @@ export function CampoTexto({ etiqueta, icono, iconoDerecha, error, style, ...pro
         <TextInput
           placeholderTextColor={Colores.placeholder}
           style={[styles.input, !icono && { paddingLeft: 24 }, style]}
+          secureTextEntry={secureTextEntry && !visible}
+          autoCapitalize={secureTextEntry ? 'none' : props.autoCapitalize}
+          autoCorrect={secureTextEntry ? false : props.autoCorrect}
           {...props}
         />
-        {iconoDerecha ? <View style={styles.iconoDerecha}>{iconoDerecha}</View> : null}
+        {iconoDerecha || ojo ? <View style={styles.iconoDerecha}>{iconoDerecha ?? ojo}</View> : null}
       </View>
       {error ? <Text style={styles.textoError}>{error}</Text> : null}
     </View>

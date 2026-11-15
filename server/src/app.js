@@ -112,11 +112,29 @@ app.post('/api/registro', async (req, res) => {
 app.post('/api/login', async (req, res) => {
   const usuario = texto(req.body?.usuario);
   const contrasena = typeof req.body?.contrasena === 'string' ? req.body.contrasena : '';
-  const u = usuario ? db.prepare('SELECT * FROM usuarios WHERE usuario = ?').get(usuario) : undefined;
+  // Username or e-mail (many people type their e-mail in "Usuario").
+  const u = usuario
+    ? db.prepare('SELECT * FROM usuarios WHERE usuario = ? OR lower(correo) = lower(?) ORDER BY usuario = ? DESC').get(usuario, usuario, usuario)
+    : undefined;
 
-  // Same message whether the user exists or not, so nobody can guess usernames.
-  if (!u || !contrasena || !(await verificarContrasena(contrasena, u.hash, u.sal))) {
-    return res.status(401).json({ error: 'Usuario o contraseña incorrectos.' });
+  // Clear reasons (sign-up already tells whether a username is taken, so this reveals nothing new).
+  if (!u) {
+    return res.status(401).json({
+      error: 'No existe una cuenta con ese usuario o correo. Revisa cómo lo escribiste o crea una cuenta nueva.',
+      motivo: 'usuario',
+    });
+  }
+  if (!contrasena || !(await verificarContrasena(contrasena, u.hash, u.sal))) {
+    if (u.google) {
+      return res.status(401).json({
+        error: 'Esta cuenta se creó con Google. Entra con el botón "Continuar con Google".',
+        motivo: 'google',
+      });
+    }
+    return res.status(401).json({
+      error: 'La contraseña no es correcta. Toca el ojo 👁 para ver lo que escribiste, o recupérala.',
+      motivo: 'contrasena',
+    });
   }
   res.json({ token: abrirSesion(u.id), usuario: publico(u) });
 });
