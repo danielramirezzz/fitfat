@@ -1,0 +1,24 @@
+{
+  "name": "fitfat-video",
+  "private": true,
+  "description": "Video del pitch de FitFat hecho con Remotion",
+  "scripts": {
+    "estudio": "remotion studio",
+    "render": "remotion render FitFatPitch out/FitFat-pitch.mp4"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.543",
+    "@remotion/google-fonts": "^4.0.543",
+    "@remotion/paths": "^4.0.543",
+    "@remotion/transitions": "^4.0.543",
+    "qrcode": "^1.5.4",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "remotion": "^4.0.543"
+  },
+  "devDependencies": {
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}

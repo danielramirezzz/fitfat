@@ -1,0 +1,15 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="28.56" height="41.16" viewBox="0 0 28.56 41.16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Fueguito">
+<path id="Vector" d="M14.28 0C17.64 8.4 28.56 14.28 28.56 26.04C28.56 34.86 22.26 41.16 14.28 41.16C6.3 41.16 0 34.86 0 26.04C0 19.74 3.36 15.96 6.3 12.18C7.14 17.64 9.66 20.58 12.18 21C10.5 14.7 11.34 6.3 14.28 0Z" fill="url(#paint0_linear_0_32)"/>
+<path id="Vector_2" opacity="0.9" d="M14.7 18.48C16.38 23.52 21.84 26.04 21.84 31.92C21.84 36.96 18.48 40.32 14.28 40.32C10.08 40.32 6.72 36.96 6.72 32.34C6.72 28.56 9.24 26.04 10.92 23.94C11.34 26.88 12.6 28.56 13.86 28.56C13.02 25.2 13.02 21.84 14.7 18.48Z" fill="#FFE27A"/>
+<path id="Vector_3" d="M10.92 32.172C11.987 32.172 12.852 31.307 12.852 30.24C12.852 29.173 11.987 28.308 10.92 28.308C9.85299 28.308 8.988 29.173 8.988 30.24C8.988 31.307 9.85299 32.172 10.92 32.172Z" fill="#1A1A1A"/>
+<path id="Vector_4" d="M17.64 32.172C18.707 32.172 19.572 31.307 19.572 30.24C19.572 29.173 18.707 28.308 17.64 28.308C16.573 28.308 15.708 29.173 15.708 30.24C15.708 31.307 16.573 32.172 17.64 32.172Z" fill="#1A1A1A"/>
+<path id="Vector_5" d="M10.92 34.44C13.16 36.68 15.4 36.68 17.64 34.44" stroke-width="1.68" stroke-linecap="round" stroke="#1A1A1A"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_32" x1="0" y1="0" x2="0" y2="41.16" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFC93C"/>
+<stop offset="1" stop-color="#FF6A1F"/>
+</linearGradient>
+</defs>
+</svg>
