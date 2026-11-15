@@ -19,3 +19,7 @@ Thumbs.db
 
 # Copia del git original de la plantilla de Expo (no se sube)
 .git-plantilla-expo/
+
+# Proyecto nativo generado por 'expo prebuild' (se regenera; el APK se hace con scripts/apk)
+app/android/
+app/ios/

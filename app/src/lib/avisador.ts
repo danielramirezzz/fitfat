@@ -1,3 +1,4 @@
+import * as Notifications from 'expo-notifications';
 import { useSyncExternalStore } from 'react';
 import { Platform } from 'react-native';
 
@@ -64,6 +65,17 @@ function sonar() {
 }
 
 function mostrar(titulo: string, cuerpo: string, premium: boolean) {
+  // Installed app (APK / Expo Go): a real system notification, right now.
+  if (Platform.OS !== 'web') {
+    Notifications.requestPermissionsAsync()
+      .then(({ granted }) =>
+        granted
+          ? Notifications.scheduleNotificationAsync({ content: { title: titulo, body: cuerpo }, trigger: null })
+          : null,
+      )
+      .catch(() => {});
+    return;
+  }
   cola = [...cola, { id: ++contador, titulo, cuerpo, premium }];
   avisar();
   sonar();

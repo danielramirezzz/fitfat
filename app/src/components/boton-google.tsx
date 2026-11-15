@@ -66,8 +66,8 @@ export function BotonGoogleOficial({ clientId, alEntrar }: { clientId: string; a
   if (Platform.OS !== 'web') {
     return (
       <Text style={styles.aviso}>
-        En Expo Go, Google necesita una versión instalada de FitFat. Para entrar con Google abre FitFat desde el
-        navegador del celular.
+        En la app instalada entra con tu usuario y contraseña. «Continuar con Google» está disponible en la versión
+        web: fitfat-n0km.onrender.com
       </Text>
     );
   }
