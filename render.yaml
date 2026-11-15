@@ -13,6 +13,8 @@ services:
         value: "24"
       - key: NODE_ENV
         value: production
+      - key: TZ # Colombia time: "today" for the streak, meals and reminders
+        value: America/Bogota
       - key: GOOGLE_CLIENT_ID # public by design
         value: 897387230037-g49jqnni5vh62hhoagk4h90kp0ohkc02.apps.googleusercontent.com
       - key: TURSO_DATABASE_URL # libsql://... (you paste it in Render)
