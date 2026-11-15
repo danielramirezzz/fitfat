@@ -1,0 +1,25 @@
+# Render "Blueprint": Render reads this file and creates the service by itself.
+services:
+  - type: web
+    name: fitfat
+    runtime: node
+    plan: free
+    region: virginia            # same area as the Turso database (AWS us-east-1)
+    buildCommand: npm run build
+    startCommand: npm start
+    healthCheckPath: /api/salud
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: NODE_ENV
+        value: production
+      - key: GOOGLE_CLIENT_ID # public by design
+        value: 897387230037-g49jqnni5vh62hhoagk4h90kp0ohkc02.apps.googleusercontent.com
+      - key: TURSO_DATABASE_URL # libsql://... (you paste it in Render)
+        sync: false
+      - key: TURSO_AUTH_TOKEN # secret: you paste it in Render
+        sync: false
+      - key: SMTP_USER # optional: real e-mail
+        sync: false
+      - key: SMTP_PASS # optional: Gmail app password (secret)
+        sync: false
