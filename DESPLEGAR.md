@@ -11,7 +11,7 @@ escribir contraseñas o claves secretas).
 
 ## 2. Base de datos en Turso (3 min)
 1. Entra a https://app.turso.tech y regístrate con **Continue with GitHub**.
-2. Crea una base de datos: nombre `fitfat`, ubicación **AWS us-east-1 (Virginia)**.
+2. Crea una base de datos: nombre `fitfat`, ubicación **AWS us-west-2 (Oregón)** (Render también está en Oregón).
 3. En la base de datos copia la **URL** (empieza por `libsql://`). Esa me la puedes pasar.
 4. Crea un **token** ("Create Token" / "Generate token", sin fecha de vencimiento, permiso de lectura y escritura).
    **El token es secreto: no me lo pases por el chat.** Lo pegarás tú mismo en Render (paso 3).
