@@ -9,7 +9,6 @@ import { Pantalla } from "@/components/pantalla";
 import { Text } from "@/components/texto";
 import { Boton, CampoTexto } from "@/components/ui";
 import { Colores, Fuentes } from "@/constants/theme";
-import { avisar } from "@/lib/avisos";
 import {
   cargarConfigServidor,
   CuentaGoogle,
@@ -175,12 +174,7 @@ export default function SeleccionarCuentaGoogle() {
         Google compartirá tu nombre, correo y foto de perfil con FitFat.{" "}
         <Text
           style={{ color: Colores.verde }}
-          onPress={() =>
-            avisar(
-              "Política de privacidad",
-              "FitFat solo usa tu nombre y correo para crear tu cuenta. No los compartimos con nadie y puedes cambiarlos en Editar perfil.",
-            )
-          }
+          onPress={() => router.push("/privacidad")}
         >
           Política de privacidad
         </Text>

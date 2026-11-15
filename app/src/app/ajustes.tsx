@@ -152,12 +152,7 @@ export default function Ajustes() {
         <Fila
           icono={<Image source={img.escudo} style={{ width: 18, height: 20 }} />}
           titulo="Privacidad y datos"
-          onPress={() =>
-            avisar(
-              'Privacidad y datos',
-              'Tus datos se guardan en el servidor de FitFat y solo tú puedes verlos con tu sesión. Tu contraseña se guarda cifrada (nadie puede leerla) y tu foto de perfil se queda en este dispositivo.',
-            )
-          }
+          onPress={() => router.push('/privacidad')}
         />
         <Fila
           icono={<Image source={img.ayuda} style={{ width: 20, height: 20 }} />}
