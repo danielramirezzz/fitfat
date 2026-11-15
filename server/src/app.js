@@ -12,6 +12,7 @@ import { asegurarPesoInicial, calcularLogros, cambioPeso, estadisticas, lunesDe,
 import {
   alertasActivas,
   generarNotificaciones,
+  notificar,
   guardarConfig,
   leerConfig,
   listarNotificaciones,
@@ -22,6 +23,7 @@ import {
 import { crearHash, nuevoToken, verificarContrasena } from './seguridad.js';
 import { buscarCuenta, cambiarConToken, crearCodigo, cuentaGoogle, verificarCodigo } from './cuentas.js';
 import { correoConfigurado, enviarCodigo } from './correo.js';
+import { guardarPremium, leerPremium, mensajePremium, textoRecordatorio } from './motivacion.js';
 import { googleConfigurado, verificarTokenGoogle } from './google.js';
 
 // Points given when an account is created ("+100 puntos de bienvenida").
@@ -48,6 +50,7 @@ function publico(u) {
     peso: u.peso,
     objetivo: u.objetivo,
     correo: u.correo ?? null,
+    premium: Boolean(u.premium),
     puntos: u.puntos,
     perfilCompleto: Boolean(u.nombre && u.fecha_nacimiento && u.genero && u.objetivo),
   };
@@ -546,6 +549,38 @@ app.put('/api/contrasena', requiereSesion, async (req, res) => {
   db.prepare('UPDATE usuarios SET hash = ?, sal = ? WHERE id = ?').run(hash, sal, u.id);
   db.prepare('DELETE FROM sesiones WHERE usuario_id = ? AND token != ?').run(u.id, req.token);
   res.json({ ok: true });
+});
+
+// --- Reminders that fire on the device (web and phone) ---------------------------------------
+// The app calls this at the chosen time; we write the personalized text and keep it in
+// the inbox (Notificaciones), once per type, day and time.
+app.post('/api/avisos/disparar', requiereSesion, (req, res) => {
+  const u = req.usuario;
+  const tipo = texto(req.body?.tipo);
+  const hora = /^([01]\d|2[0-3]):[0-5]\d$/.test(req.body?.hora) ? req.body.hora : 'ahora';
+  const prueba = Boolean(req.body?.prueba);
+  let mensaje;
+  if (tipo === 'premium') {
+    if (!u.premium) return res.status(403).json({ error: 'Los mensajes motivacionales son de FitFat Premium.' });
+    mensaje = mensajePremium(u);
+  } else if (['entrenamiento', 'agua', 'comidas', 'dormir', 'pesaje', 'motivacion'].includes(tipo)) {
+    mensaje = textoRecordatorio(u, tipo);
+  } else {
+    return res.status(400).json({ error: 'Tipo de aviso inválido.' });
+  }
+  const clave = prueba ? `prueba-${Date.now()}` : `aviso-${fechaLocal()}-${tipo}-${hora}`;
+  notificar(u.id, clave, tipo === 'premium' ? 'motivacion' : tipo, mensaje.titulo, mensaje.cuerpo);
+  res.json({ ...mensaje, noLeidas: noLeidas(u.id) });
+});
+
+// --- FitFat Premium ---------------------------------------------------------------------------
+app.get('/api/premium', requiereSesion, (req, res) => res.json(leerPremium(req.usuario)));
+
+app.put('/api/premium', requiereSesion, (req, res) => {
+  const error = guardarPremium(req.usuario.id, req.body);
+  if (error) return res.status(400).json({ error });
+  const u = db.prepare('SELECT * FROM usuarios WHERE id = ?').get(req.usuario.id);
+  res.json({ ...leerPremium(u), usuario: publico(u) });
 });
 
 // Sign out: deletes this session's token.

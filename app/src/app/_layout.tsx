@@ -12,6 +12,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 
+import { VigiaAvisos } from '@/components/vigia-avisos';
 import { Colores } from '@/constants/theme';
 import { cargarAccesibilidad } from '@/lib/accesibilidad';
 import { prepararSesion } from '@/lib/sesion';
@@ -49,6 +50,7 @@ export default function RootLayout() {
         {/* No swipe-back during a workout: leaving goes through the X button. */}
         <Stack.Screen name="entreno" options={{ gestureEnabled: false }} />
       </Stack>
+      <VigiaAvisos />
     </>
   );
 }

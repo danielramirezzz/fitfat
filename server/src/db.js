@@ -141,6 +141,11 @@ db.exec(`
 
 // Columns added after the first version (simple migration for existing databases).
 const columnasUsuarios = db.prepare('PRAGMA table_info(usuarios)').all().map((c) => c.name);
+if (!columnasUsuarios.includes('premium')) {
+  db.exec('ALTER TABLE usuarios ADD COLUMN premium INTEGER NOT NULL DEFAULT 0'); // FitFat Premium
+  db.exec(`ALTER TABLE usuarios ADD COLUMN premium_horas TEXT NOT NULL DEFAULT '["08:00","13:00","19:00"]'`);
+  db.exec('ALTER TABLE usuarios ADD COLUMN premium_desde TEXT');
+}
 if (!columnasUsuarios.includes('google_sub')) {
   db.exec('ALTER TABLE usuarios ADD COLUMN google_sub TEXT'); // Google's id for the person (real sign-in)
 }

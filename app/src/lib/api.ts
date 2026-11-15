@@ -36,6 +36,7 @@ export type Usuario = {
   peso: number | null;
   objetivo: string | null;
   correo: string | null;
+  premium?: boolean;
   puntos: number;
   perfilCompleto: boolean;
 };

@@ -173,6 +173,16 @@ export default function Perfil() {
         </>
       )}
 
+      {/* Extra (not in Figma): FitFat Premium */}
+      <Pressable
+        onPress={() => router.push('/premium')}
+        accessibilityRole="button"
+        style={({ pressed }) => [styles.premium, pressed && { opacity: 0.85 }]}>
+        <Text style={{ fontSize: 22 }}>👑</Text>
+        <Text style={styles.textoPremium}>{u?.premium ? 'FitFat Premium · activo' : 'Hazte FitFat Premium'}</Text>
+        <Text style={styles.flechaPremium}>›</Text>
+      </Pressable>
+
       <View style={{ marginTop: 20 }}>
         <BotonCerrarSesion onPress={() => setConfirmarSalida(true)} />
       </View>
@@ -228,5 +238,18 @@ const styles = StyleSheet.create({
   insigniaTexto: { fontFamily: Fuentes.bold, fontSize: 12, color: '#000000' },
   separador: { height: 1, backgroundColor: '#262626', marginHorizontal: 16 },
 
+  premium: {
+    marginTop: 14,
+    height: 54,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    borderRadius: Radios.tarjeta,
+    borderWidth: 1.5,
+    borderColor: '#FFC93C',
+    backgroundColor: '#211A08',
+  },
+  textoPremium: { flex: 1, fontFamily: Fuentes.bold, fontSize: 15, color: '#FFC93C', marginLeft: 12 },
+  flechaPremium: { fontFamily: Fuentes.bold, fontSize: 22, color: '#FFC93C' },
   version: { fontFamily: Fuentes.regular, fontSize: 12, color: '#6F6F6F', textAlign: 'center', marginTop: 16 },
 });

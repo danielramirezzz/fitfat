@@ -19,7 +19,9 @@ import {
   TipoAlerta,
   TIPOS,
 } from '@/lib/alertas';
+import { dispararAviso, pedirPermisoNavegador, recargarAvisos } from '@/lib/avisador';
 import { avisar } from '@/lib/avisos';
+import { useSesion } from '@/lib/sesion';
 
 const img = {
   cuadroPush: require('@/assets/figma/alertas/cuadro-push.svg'),
@@ -45,6 +47,7 @@ type Config = Omit<ConfigAlertas, 'guardada'>;
 
 // "Pantalla canales y tipos de alerta" (Recordatorios).
 export default function Recordatorios() {
+  const { usuario } = useSesion();
   const [config, setConfig] = useState<Config | null>(null);
   const [abierto, setAbierto] = useState<'hora' | 'frecuencia' | null>(null);
   const [noLeidas, setNoLeidas] = useState(0);
@@ -79,8 +82,10 @@ export default function Recordatorios() {
   const guardar = async () => {
     setGuardando(true);
     try {
+      await pedirPermisoNavegador(); // browser: allow notifications outside the page (after this tap)
       await guardarConfig(config);
       const estado = await programarRecordatorios(config);
+      await recargarAvisos();
       if (estado === 'sin-permiso') {
         avisar('Permiso necesario', 'Activa las notificaciones de FitFat en los ajustes del celular para recibir tus recordatorios.');
       }
@@ -160,7 +165,11 @@ export default function Recordatorios() {
       </View>
 
       {abierto === 'hora' && (
-        <ScrollView style={styles.lista} nestedScrollEnabled>
+        <ScrollView
+          style={styles.lista}
+          nestedScrollEnabled
+          // Open the list right at the chosen time (42 px per row).
+          ref={(r) => r?.scrollTo({ y: Math.max(0, HORAS.indexOf(config.hora) * 42 - 79), animated: false })}>
           {HORAS.map((h) => (
             <Pressable
               key={h}
@@ -200,6 +209,30 @@ export default function Recordatorios() {
           <Text style={styles.textoTip}>{tip}</Text>
         </View>
       </View>
+
+      {/* Extras (not in Figma): try a notification right now + FitFat Premium */}
+      <Pressable
+        onPress={async () => {
+          await pedirPermisoNavegador();
+          dispararAviso(config.tipos[0] ?? 'motivacion', 'ahora', true);
+        }}
+        accessibilityRole="button"
+        style={({ pressed }) => [styles.probar, pressed && { opacity: 0.8 }]}>
+        <Text style={styles.textoProbar}>🔔  Probar notificación ahora</Text>
+      </Pressable>
+
+      <Pressable
+        onPress={() => router.push('/premium')}
+        accessibilityRole="button"
+        accessibilityLabel="FitFat Premium: mensajes motivacionales"
+        style={({ pressed }) => [styles.premium, pressed && { opacity: 0.85 }]}>
+        <Text style={{ fontSize: 26 }}>👑</Text>
+        <View style={{ flex: 1, marginLeft: 12 }}>
+          <Text style={styles.tituloPremium}>{usuario?.premium ? 'FitFat Premium activo' : 'Hazte FitFat Premium'}</Text>
+          <Text style={styles.textoPremium}>Mensajes motivacionales con tu nombre y tu racha, hasta 4 veces al día.</Text>
+        </View>
+        <Text style={styles.flechaPremium}>›</Text>
+      </Pressable>
 
       <View style={styles.botones}>
         <Boton texto="Cancelar" variante="gris" onPress={() => router.push('/alerta-cancelada')} estilo={{ width: 141 }} />
@@ -241,6 +274,29 @@ function Canal({ cuadro, icono, ancho, alto, izq, arriba, nombre, activo, onPres
 }
 
 const styles = StyleSheet.create({
+  probar: {
+    marginTop: 16,
+    height: 46,
+    borderRadius: 23,
+    borderWidth: 1,
+    borderColor: Colores.verde,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textoProbar: { fontFamily: Fuentes.etiqueta, fontSize: 16, color: Colores.verde },
+  premium: {
+    marginTop: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 14,
+    borderRadius: 16,
+    borderWidth: 1.5,
+    borderColor: '#FFC93C',
+    backgroundColor: '#211A08',
+  },
+  tituloPremium: { fontFamily: Fuentes.bold, fontSize: 15, color: '#FFC93C' },
+  textoPremium: { fontFamily: Fuentes.regular, fontSize: 12, lineHeight: 17, color: Colores.textoClaro, marginTop: 2 },
+  flechaPremium: { fontFamily: Fuentes.bold, fontSize: 24, color: '#FFC93C', marginLeft: 8 },
   contenido: { paddingTop: 4 },
   cabecera: { flexDirection: 'row', alignItems: 'center' },
   titulo: { flex: 1, fontFamily: Fuentes.bold, fontSize: 24, color: Colores.texto, marginLeft: 14 },

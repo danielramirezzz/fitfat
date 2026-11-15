@@ -48,10 +48,11 @@ export function horaBonita(hora: string) {
   return `${h % 12 === 0 ? 12 : h % 12}:${String(m).padStart(2, '0')} ${sufijo}`;
 }
 
-// Every half hour from 5:00 a. m. to 10:00 p. m.
-export const HORAS = Array.from({ length: 35 }, (_, i) => {
-  const minutos = 5 * 60 + i * 30;
-  return `${String(Math.floor(minutos / 60)).padStart(2, '0')}:${minutos % 60 === 0 ? '00' : '30'}`;
+// Every 5 minutes from 5:00 a. m. to 11:55 p. m. (fine enough to set a reminder
+// "in 5 minutes" during a demo).
+export const HORAS = Array.from({ length: (24 - 5) * 12 }, (_, i) => {
+  const minutos = 5 * 60 + i * 5;
+  return `${String(Math.floor(minutos / 60)).padStart(2, '0')}:${String(minutos % 60).padStart(2, '0')}`;
 });
 
 let resultadoGuardado: { puntosGanados: number } | null = null;
@@ -130,6 +131,17 @@ export async function programarRecordatorios(c: Omit<ConfigAlertas, 'guardada'>)
       : [{ type: Notifications.SchedulableTriggerInputTypes.DAILY, hour, minute, channelId: 'recordatorios' }];
     for (const trigger of triggers) {
       await Notifications.scheduleNotificationAsync({ content: MENSAJES[tipo], trigger });
+    }
+  }
+  // FitFat Premium: a daily motivational reminder at each chosen time.
+  const premium = await apiConSesion<{ activo: boolean; horas: string[] }>('GET', '/premium').catch(() => null);
+  if (premium?.activo) {
+    for (const hora of premium.horas) {
+      const [ph, pm] = hora.split(':').map(Number);
+      await Notifications.scheduleNotificationAsync({
+        content: { title: 'FitFat Premium 👑', body: 'Tu mensaje motivacional te espera. ¡Tú eres tu único rival!' },
+        trigger: { type: Notifications.SchedulableTriggerInputTypes.DAILY, hour: ph, minute: pm, channelId: 'recordatorios' },
+      });
     }
   }
   return 'programados';

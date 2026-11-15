@@ -47,7 +47,7 @@ export function alertasActivas(usuarioId) {
 
 // --- Notifications -----------------------------------------------------------------
 
-function notificar(usuarioId, clave, tipo, titulo, cuerpo) {
+export function notificar(usuarioId, clave, tipo, titulo, cuerpo) {
   db.prepare(
     'INSERT OR IGNORE INTO notificaciones (usuario_id, clave, tipo, titulo, cuerpo) VALUES (?, ?, ?, ?, ?)',
   ).run(usuarioId, clave, tipo, titulo, cuerpo);
