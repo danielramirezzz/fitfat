@@ -1,12 +1,12 @@
 import { Image } from 'expo-image';
 import { Redirect, router } from 'expo-router';
-import * as WebBrowser from 'expo-web-browser';
 import { useEffect, useRef, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { Text } from '@/components/texto';
 import { Anillo } from '@/components/anillo';
 import { Musica } from '@/components/musica';
+import { VideoEjercicio } from '@/components/video-ejercicio';
 import { Pantalla } from '@/components/pantalla';
 import { Boton } from '@/components/ui';
 import { Colores, Fuentes } from '@/constants/theme';
@@ -16,10 +16,6 @@ import { cantidad, completarRutina, Ejercicio, obtenerRutinaActual, reloj, Rutin
 
 const img = {
   salir: require('@/assets/figma/rutinas/boton-salir.svg'),
-  videoFondo: require('@/assets/figma/rutinas/video-curso.svg'),
-  montanas: require('@/assets/figma/rutinas/video-montanas.svg'),
-  pesaGris: require('@/assets/figma/rutinas/video-pesa.svg'),
-  pildora: require('@/assets/figma/rutinas/video-pildora.svg'),
   anterior: require('@/assets/figma/rutinas/boton-anterior.svg'),
   pausa: require('@/assets/figma/rutinas/boton-pausa.svg'),
   siguiente: require('@/assets/figma/rutinas/boton-siguiente.svg'),
@@ -222,20 +218,8 @@ function Sesion({ rutina }: { rutina: Rutina }) {
         </>
       ) : (
         <>
-          {/* Video placeholder from Figma: opens the technique video */}
-          <Pressable
-            onPress={() => WebBrowser.openBrowserAsync(ej.video)}
-            accessibilityRole="button"
-            accessibilityLabel={`Ver video de ${ej.nombre}`}
-            style={styles.video}>
-            <Image source={img.videoFondo} style={StyleSheet.absoluteFill} />
-            <Image source={img.montanas} style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 112 }} />
-            <Image source={img.pesaGris} style={{ position: 'absolute', top: 80, alignSelf: 'center', width: 54.5, height: 31.2 }} />
-            <View style={styles.pildoraVideo}>
-              <Image source={img.pildora} style={StyleSheet.absoluteFill} />
-              <Text style={styles.textoVideo}>▶ video</Text>
-            </View>
-          </Pressable>
+          {/* Technique video, inside the app (pauses with the timer) */}
+          <VideoEjercicio key={ej.video} clave={ej.video} estilo={styles.video} pausado={fin === null} />
 
           <Text style={styles.nombreEj}>{ej.nombre.toUpperCase()}</Text>
           <Text style={styles.serie}>
@@ -314,8 +298,6 @@ const styles = StyleSheet.create({
   segmento: { flex: 1, height: 6, borderRadius: 3 },
 
   video: { marginTop: 16, height: 200, borderRadius: 18, overflow: 'hidden' },
-  pildoraVideo: { position: 'absolute', top: 12, right: 12, width: 70, height: 24, alignItems: 'center', justifyContent: 'center' },
-  textoVideo: { fontFamily: Fuentes.regular, fontSize: 12, color: '#DDDDDD' },
   nombreEj: { fontFamily: Fuentes.etiqueta, fontSize: 14, color: Colores.verde, textAlign: 'center', marginTop: 26 },
   serie: { fontFamily: Fuentes.regular, fontSize: 15, color: Colores.textoClaro, textAlign: 'center', marginTop: 10 },
   tiempo: { fontFamily: Fuentes.bold, fontSize: 34, color: Colores.texto },

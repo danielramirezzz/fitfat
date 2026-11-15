@@ -9,7 +9,7 @@ export type Ejercicio = {
   detalle: string;
   duracionSerie: number; // seconds per set
   descanso: number; // seconds of rest between sets
-  video: string; // YouTube search URL
+  video: string; // key of the video in app/assets/videos (see components/video-ejercicio.tsx)
 };
 
 export type Rutina = {

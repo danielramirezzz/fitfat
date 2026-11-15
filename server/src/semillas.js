@@ -72,7 +72,7 @@ export const GRUPOS = {
       { nombre: 'Superman', reps: 15, detalle: 'Boca abajo, sube brazos y piernas' },
       { nombre: 'Remo invertido en mesa', reps: 10, detalle: 'Bajo una mesa firme, jala el pecho' },
       { nombre: 'Ángeles en el piso', reps: 12, detalle: 'Boca abajo, brazos en forma de Y a W' },
-      { nombre: 'Plancha inversa', segundos: 30, detalle: 'Cadera arriba, mirada al techo' },
+      { nombre: 'Plancha lateral con giro', segundos: 30, detalle: 'De lado sobre un brazo, gira y sube el otro al techo' },
     ],
   },
   piernas: {

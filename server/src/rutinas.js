@@ -25,7 +25,12 @@ function ejerciciosDe(grupo) {
   return db
     .prepare('SELECT nombre, reps, segundos, detalle FROM ejercicios WHERE grupo = ? ORDER BY orden')
     .all(grupo)
-    .map(({ nombre, reps, segundos, detalle }) => ({ nombre, detalle, ...(reps ? { reps } : { segundos }) }));
+    .map(({ nombre, reps, segundos, detalle }, i) => ({
+      nombre,
+      detalle,
+      ...(reps ? { reps } : { segundos }),
+      video: `${grupo}-${i + 1}`, // app/assets/videos/<grupo>-<n>.mp4 (Pexels)
+    }));
 }
 
 // Builds the routine for a group and time. Returns null if the group is unknown.
@@ -36,15 +41,13 @@ export function armarRutina(grupo, minutos) {
   const series = SERIES_POR_TIEMPO[minutos];
 
   const ejercicios = [
-    { nombre: 'Calentamiento', series: 1, segundos: 180, detalle: 'Movilidad articular y trote suave' },
+    { nombre: 'Calentamiento', series: 1, segundos: 180, detalle: 'Movilidad articular y trote suave', video: 'calentamiento' },
     ...g.ejercicios.map((e) => ({ ...e, series })),
   ].map((e) => ({
     ...e,
     // Seconds per set: timed exercises use their own time; reps ≈ 3 s each.
     duracionSerie: e.segundos ?? e.reps * 3,
     descanso: 30,
-    // YouTube search for the technique (real videos, nothing to host).
-    video: `https://www.youtube.com/results?search_query=${encodeURIComponent(`${e.nombre} técnica correcta`)}`,
   }));
 
   return {

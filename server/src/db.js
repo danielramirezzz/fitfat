@@ -238,3 +238,8 @@ db.exec('BEGIN');
   LOGROS.forEach((l, i) => logro.run(l.clave, l.nombre, l.descripcion, l.tipo, i + 1));
 }
 db.exec('COMMIT');
+
+// Catalog fixes (seeds never overwrite, so renamed exercises are updated here).
+db.prepare(
+  "UPDATE ejercicios SET nombre = ?, detalle = ? WHERE grupo = 'espalda' AND orden = 4 AND nombre = 'Plancha inversa'",
+).run('Plancha lateral con giro', 'De lado sobre un brazo, gira y sube el otro al techo');

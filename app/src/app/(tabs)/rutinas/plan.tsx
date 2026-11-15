@@ -1,22 +1,18 @@
 import { Image } from 'expo-image';
 import { router, useLocalSearchParams } from 'expo-router';
-import * as WebBrowser from 'expo-web-browser';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 
 import { Text } from '@/components/texto';
 import { Musica } from '@/components/musica';
+import { VideoEjercicio } from '@/components/video-ejercicio';
 import { Pantalla } from '@/components/pantalla';
 import { Boton, BotonVolver } from '@/components/ui';
 import { Colores, Fuentes } from '@/constants/theme';
 import { cantidad, cargarRutina, guardarRutinaActual, reloj, Rutina } from '@/lib/rutinas';
 
 const img = {
-  videoFondo: require('@/assets/figma/rutinas/video-fondo.svg'),
-  circulo1: require('@/assets/figma/rutinas/video-circulo-1.svg'),
-  circulo2: require('@/assets/figma/rutinas/video-circulo-2.svg'),
-  playCirculo: require('@/assets/figma/rutinas/play-circulo.svg'),
-  playTriangulo: require('@/assets/figma/rutinas/play-triangulo.svg'),
   pildora: require('@/assets/figma/rutinas/pildora-tiempo.svg'),
   cuadroPlay: require('@/assets/figma/rutinas/cuadro-play.svg'),
   playChico: require('@/assets/figma/rutinas/play-chico.svg'),
@@ -70,22 +66,13 @@ export default function PlanRutina() {
         </View>
       </View>
 
-      {/* Video card: plays the technique video of the chosen exercise */}
-      <Pressable
-        onPress={() => WebBrowser.openBrowserAsync(ej.video)}
-        accessibilityRole="button"
-        accessibilityLabel={`Ver video de ${ej.nombre}`}
-        style={styles.video}>
-        <Image source={img.videoFondo} style={StyleSheet.absoluteFill} />
-        <Image source={img.circulo1} style={{ position: 'absolute', right: 36, top: -10, width: 92, height: 92 }} />
-        <Image source={img.circulo2} style={{ position: 'absolute', left: 40, top: 106, width: 60, height: 60 }} />
+      {/* Video card: the technique video of the chosen exercise plays right here */}
+      <View style={styles.video} accessible accessibilityLabel={`Video de ${ej.nombre}`}>
+        <VideoEjercicio key={ej.video} clave={ej.video} estilo={StyleSheet.absoluteFill} />
+        <LinearGradient colors={['transparent', 'rgba(0,0,0,0.85)']} style={styles.sombra} pointerEvents="none" />
         <View style={styles.pildora}>
           <Image source={img.pildora} style={StyleSheet.absoluteFill} />
           <Text style={styles.textoPildora}>{reloj(ej.duracionSerie).replace(/^0/, '')}</Text>
-        </View>
-        <View style={styles.play}>
-          <Image source={img.playCirculo} style={StyleSheet.absoluteFill} />
-          <Image source={img.playTriangulo} style={{ width: 23, height: 28, marginLeft: 6 }} />
         </View>
         <Text style={styles.numeroEj}>
           EJERCICIO {elegido + 1} DE {total}
@@ -93,7 +80,7 @@ export default function PlanRutina() {
         <Text style={styles.nombreEj} numberOfLines={1}>
           {ej.nombre}
         </Text>
-      </Pressable>
+      </View>
 
       <View style={styles.filaProgreso}>
         <Text style={styles.etiqueta}>Progreso de la rutina</Text>
@@ -147,7 +134,8 @@ const styles = StyleSheet.create({
   titulo: { fontFamily: Fuentes.bold, fontSize: 22, color: Colores.texto },
   sub: { fontFamily: Fuentes.regular, fontSize: 13, color: Colores.textoSecundario, marginTop: 4 },
 
-  video: { marginTop: 20, height: 196, borderRadius: 18, overflow: 'hidden' },
+  video: { marginTop: 20, height: 196, borderRadius: 18, overflow: 'hidden', backgroundColor: '#111' },
+  sombra: { position: 'absolute', left: 0, right: 0, bottom: 0, height: 90 },
   pildora: {
     position: 'absolute',
     top: 14,
@@ -158,15 +146,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textoPildora: { fontFamily: Fuentes.etiqueta, fontSize: 14, color: Colores.texto },
-  play: {
-    position: 'absolute',
-    top: 58,
-    alignSelf: 'center',
-    width: 64,
-    height: 64,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   numeroEj: { position: 'absolute', left: 16, top: 146, fontFamily: Fuentes.etiqueta, fontSize: 14, color: Colores.verde },
   nombreEj: { position: 'absolute', left: 16, right: 16, top: 165, fontFamily: Fuentes.bold, fontSize: 17, color: Colores.texto },
 
