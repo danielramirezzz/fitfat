@@ -1,0 +1,12 @@
+{
+  "name": "fitfat",
+  "private": true,
+  "description": "FitFat: app (Expo, carpeta app/) + servidor (Express, carpeta server/). Este archivo es para el despliegue.",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "build": "node scripts/construir.mjs",
+    "start": "node server/src/index.js"
+  }
+}

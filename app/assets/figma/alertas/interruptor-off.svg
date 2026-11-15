@@ -1,0 +1,6 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="48" height="28" viewBox="0 0 48 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Interruptor">
+<path id="Track" d="M34 0H14C6.26801 0 0 6.26801 0 14C0 21.732 6.26801 28 14 28H34C41.732 28 48 21.732 48 14C48 6.26801 41.732 0 34 0Z" fill="#3A3A3A"/>
+<path id="Knob" d="M14 25C20.0751 25 25 20.0751 25 14C25 7.92487 20.0751 3 14 3C7.92487 3 3 7.92487 3 14C3 20.0751 7.92487 25 14 25Z" fill="white"/>
+</g>
+</svg>

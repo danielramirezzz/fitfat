@@ -1,0 +1,17 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="102" height="147" viewBox="0 0 102 147" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Fueguito">
+<path id="Vector" d="M51 0C63 30 102 51 102 93C102 124.5 79.5 147 51 147C22.5 147 0 124.5 0 93C0 70.5 12 57 22.5 43.5C25.5 63 34.5 73.5 43.5 75C37.5 52.5 40.5 22.5 51 0Z" fill="url(#paint0_linear_0_25)"/>
+<path id="Vector_2" opacity="0.9" d="M52.5 66C58.5 84 78 93 78 114C78 132 66 144 51 144C36 144 24 132 24 115.5C24 102 33 93 39 85.5C40.5 96 45 102 49.5 102C46.5 90 46.5 78 52.5 66Z" fill="#FFE27A"/>
+<path id="Vector_3" d="M39 114.9C42.8108 114.9 45.9 111.811 45.9 108C45.9 104.189 42.8108 101.1 39 101.1C35.1892 101.1 32.1 104.189 32.1 108C32.1 111.811 35.1892 114.9 39 114.9Z" fill="#1A1A1A"/>
+<path id="Vector_4" d="M63 114.9C66.8108 114.9 69.9 111.811 69.9 108C69.9 104.189 66.8108 101.1 63 101.1C59.1892 101.1 56.1 104.189 56.1 108C56.1 111.811 59.1892 114.9 63 114.9Z" fill="#1A1A1A"/>
+<path id="Vector_5" d="M39 123C47 131 55 131 63 123" stroke-width="6" stroke-linecap="round" stroke="#1A1A1A"/>
+<path id="Vector_6" opacity="0.7" d="M30 125.1C32.8167 125.1 35.1 122.817 35.1 120C35.1 117.183 32.8167 114.9 30 114.9C27.1833 114.9 24.9 117.183 24.9 120C24.9 122.817 27.1833 125.1 30 125.1Z" fill="#FF8A8A"/>
+<path id="Vector_7" opacity="0.7" d="M72 125.1C74.8166 125.1 77.1 122.817 77.1 120C77.1 117.183 74.8166 114.9 72 114.9C69.1833 114.9 66.9 117.183 66.9 120C66.9 122.817 69.1833 125.1 72 125.1Z" fill="#FF8A8A"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_25" x1="0" y1="0" x2="0" y2="147" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFC93C"/>
+<stop offset="1" stop-color="#FF6A1F"/>
+</linearGradient>
+</defs>
+</svg>

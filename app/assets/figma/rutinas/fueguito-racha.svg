@@ -1,0 +1,12 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="24.48" height="35.28" viewBox="0 0 24.48 35.28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Fueguito racha">
+<path id="Vector" d="M12.24 1.71065e-05C15.12 7.20002 24.48 12.24 24.48 22.32C24.48 29.88 19.08 35.28 12.24 35.28C5.4 35.28 0 29.88 0 22.32C0 16.92 2.88 13.68 5.4 10.44C6.12 15.12 8.28 17.64 10.44 18C9 12.6 9.72 5.40002 12.24 1.71065e-05Z" fill="url(#paint0_linear_0_20)"/>
+<path id="Vector_2" opacity="0.9" d="M12.6 15.84C14.04 20.16 18.72 22.32 18.72 27.36C18.72 31.68 15.84 34.56 12.24 34.56C8.64 34.56 5.76 31.68 5.76 27.72C5.76 24.48 7.92 22.32 9.36 20.52C9.72 23.04 10.8 24.48 11.88 24.48C11.16 21.6 11.16 18.72 12.6 15.84Z" fill="#FFE27A"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_20" x1="0" y1="1.71065e-05" x2="0" y2="35.28" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFC93C"/>
+<stop offset="1" stop-color="#FF6A1F"/>
+</linearGradient>
+</defs>
+</svg>

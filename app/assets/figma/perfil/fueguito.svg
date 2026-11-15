@@ -1,0 +1,12 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="14.96" height="21.56" viewBox="0 0 14.96 21.56" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Fueguito">
+<path id="Vector" d="M7.48 3.66569e-06C9.24 4.4 14.96 7.48 14.96 13.64C14.96 18.26 11.66 21.56 7.48 21.56C3.3 21.56 0 18.26 0 13.64C0 10.34 1.76 8.36 3.3 6.38C3.74 9.24 5.06 10.78 6.38 11C5.5 7.7 5.94 3.3 7.48 3.66569e-06Z" fill="url(#paint0_linear_0_83)"/>
+<path id="Vector_2" opacity="0.9" d="M7.7 9.68C8.58 12.32 11.44 13.64 11.44 16.72C11.44 19.36 9.68 21.12 7.48 21.12C5.28 21.12 3.52 19.36 3.52 16.94C3.52 14.96 4.84 13.64 5.72 12.54C5.94 14.08 6.6 14.96 7.26 14.96C6.82 13.2 6.82 11.44 7.7 9.68Z" fill="#FFE27A"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_83" x1="0" y1="3.66569e-06" x2="0" y2="21.56" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFC93C"/>
+<stop offset="1" stop-color="#FF6A1F"/>
+</linearGradient>
+</defs>
+</svg>

@@ -1,0 +1,21 @@
+# Dependencias (se reinstalan con npm)
+node_modules/
+
+# Versión web construida (Render la genera con "npm run build")
+app/dist/
+app/.expo/
+app/expo-env.d.ts
+
+# Base de datos local y claves: NUNCA al repositorio
+server/datos/
+.env
+.env.*
+!.env.example
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log
+
+# Copia del git original de la plantilla de Expo (no se sube)
+.git-plantilla-expo/
