@@ -29,3 +29,8 @@ app/ios/
 
 # Video del pitch ya renderizado (se regenera con 'npm run render' en video/)
 pitch/*.mp4
+
+# Notas y configuración locales del editor (no se suben)
+CLAUDE.md
+.claude/
+app/.claude/
